@@ -1,0 +1,50 @@
+{
+  "pins" : [
+    {
+      "identity" : "gpt3-tokenizer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/aespinilla/GPT3-Tokenizer",
+      "state" : {
+        "revision" : "cadab0d19a1602cc505493990a9fc4810d8e3070",
+        "version" : "0.1.2"
+      }
+    },
+    {
+      "identity" : "granite",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pexavc/Granite.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "38a883690cadea0d6bf8acd1e303663e7bad18dd"
+      }
+    },
+    {
+      "identity" : "ink",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JohnSundell/Ink",
+      "state" : {
+        "revision" : "bcc9f219900a62c4210e6db726035d7f03ae757b",
+        "version" : "0.6.0"
+      }
+    },
+    {
+      "identity" : "launchatlogin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sindresorhus/LaunchAtLogin",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7ad6331f9c38953eb1ce8737758e18f7607e984a"
+      }
+    },
+    {
+      "identity" : "vaultkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pexavc/VaultKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "22b0f3d2920666a28cbb715281d82741998ddcc1"
+      }
+    }
+  ],
+  "version" : 2
+}
