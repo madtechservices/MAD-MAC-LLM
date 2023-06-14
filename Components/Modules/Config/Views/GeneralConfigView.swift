@@ -94,23 +94,23 @@ struct GeneralConfigView: View {
                        config: config.state.customPromptConfig)
             .padding(.top, 8)
             
-            Text("Custom API Key for OpenAI's ChatGPT")
-                .font(Fonts.live(.headline, .bold))
-                .foregroundColor(.foreground)
-            AppBlurView(size: .init(width: 0, height: 60),
-                        tintColor: Brand.Colors.black.opacity(0.3)) {
-                MacEditorTextView(
-                    text: $apiKey,
-                    isEditable: true,
-                    font: Fonts.nsFont(.defaultSize, .bold))
-            }
-            .frame(height: 60)
-            
             Spacer()
             
             if SessionManager.IS_API_ACCESS_ENABLED &&
                 config.state.isCustomAPIKeySet == false &&
                 useAzure == false {
+                
+                Text("Custom API Key for OpenAI's ChatGPT")
+                    .font(Fonts.live(.headline, .bold))
+                    .foregroundColor(.foreground)
+                AppBlurView(size: .init(width: 0, height: 60),
+                            tintColor: Brand.Colors.black.opacity(0.3)) {
+                    MacEditorTextView(
+                        text: $apiKey,
+                        isEditable: true,
+                        font: Fonts.nsFont(.defaultSize, .bold))
+                }
+                .frame(height: 60)
                 
                 AppBlurView(tintColor: Brand.Colors.black.opacity(0.3)) {
                     Button(action: {
