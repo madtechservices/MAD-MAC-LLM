@@ -7,18 +7,14 @@ extension SandService {
     struct ActivateCommands: GraniteReducer {
         typealias Center = SandService.Center
         
-        struct Meta: GranitePayload {
-            let isActive: Bool
-        }
-        
-        @Payload var meta: Meta?
-        
+        @Relay var query: QueryService
         @Relay var environment: EnvironmentService
         @Relay var prompts: PromptService
         
         func reduce(state: inout Center.State) {
-            guard let meta = self.meta else { return }
             guard state.commandSet == nil else { return }
+            
+            let isActive = state.commandAutoComplete.isNotEmpty ? false : true
             
             environment
                 .center
@@ -26,11 +22,18 @@ extension SandService {
                 .send(
                     EnvironmentService
                         .CommandMenuActivated
-                        .Meta(isActive: meta.isActive))
+                        .Meta(isActive: isActive))
             
-            SandGPTTokenizerManager.shared.pause = meta.isActive
+            SandGPTTokenizerManager.shared.pause = isActive
             
-            if meta.isActive {
+            if isActive && query.state.value.isEmpty {
+                query.center.$state.binding.value.wrappedValue = "/"
+            } else if isActive == false &&
+                        query.center.$state.binding.value.wrappedValue.starts(with: "/") {
+                query.center.$state.binding.value.wrappedValue = ""
+            }
+            
+            if isActive {
                 state.commandAutoComplete = prompts.commands
             } else {
                 state.commandAutoComplete = []

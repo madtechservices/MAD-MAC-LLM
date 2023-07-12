@@ -176,6 +176,10 @@ extension SandGPT {
         self.clientAzure = ChatGPTAzure(config: SandGPT.AZURE_CONFIG)
     }
     
+    func unlock() {
+        session.isCustomAPI(true)
+    }
+    
     //TODO: Clean up, setup seperate client for custom do not replace main client
     func useCustomAPI() {
         print("[SandGPT] Using custom API \(CUSTOM_API_KEY != nil)")
