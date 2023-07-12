@@ -10,6 +10,8 @@ General Query View           |  Prompt Studio
 
 ![Roadmap](https://file.notion.so/f/s/eb993501-80b9-42f4-93b2-c1550d8368b8/Screen_Shot_2023-07-12_at_3.02.27_PM.png?id=d5a0f3b7-5924-46c2-a8b5-7188b0d2656a&table=block&spaceId=17d5523b-2768-454a-a614-3e8b3ad01079&expirationTimestamp=1689292800000&signature=TcqIWy3aUYFd5Yg0-qIIokU4Bp3ek5GTivalH2_iTfA&downloadName=Screen+Shot+2023-07-12+at+3.02.27+PM.png)
 
+[Follow updates here](https://pexavc.com/nea-ios-macos.html)
+
 **Table of Contents**
 - [Requirements](#requirements)
 - [Swift Packages & Credits](#swift-packages-&-credits)
