@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 /// A simple and easy to use wrapper around the ChatGPT API from OpenAI, with support for GPT 3.5 turbo as well as GPT 4 and its large context variant.
 public class ChatGPTAzure {
     public struct Config {

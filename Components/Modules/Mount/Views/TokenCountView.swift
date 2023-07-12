@@ -35,7 +35,7 @@ struct TokenCountView: View {
                         .font(Fonts.live(.caption, .bold))
                         .foregroundColor(.foreground) + Text("\(tokenCount)/\(maxTokenCount)")
                         .font(Fonts.live(.caption, .bold))
-                        .foregroundColor((SandGPTTokenizerManager.tokenCount <= maxTokenCount ? Brand.Colors.green : Brand.Colors.red).opacity(0.55))
+                        .foregroundColor((tokenCount <= maxTokenCount ? Brand.Colors.green : Brand.Colors.red).opacity(0.55))
                     
                 }
             }

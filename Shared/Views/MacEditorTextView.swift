@@ -12,10 +12,11 @@ import Carbon
 
 struct MacEditorTextView: NSViewRepresentable {
     @Binding var text: String
+    var placeholderText: String = ""
+    
     var autoCompleteText: Binding<[String]> = .constant([])
     
     var isEditable: Bool = true
-    var isCommandMenuActive: Binding<Bool> = .constant(false)
     var font: NSFont?    = Fonts.nsFont(.defaultSize, .bold)
     var textColor: NSColor = Color.foreground.asNSColor
     
@@ -36,20 +37,22 @@ struct MacEditorTextView: NSViewRepresentable {
         Coordinator(self)
     }
     
-    func makeNSView(context: Context) -> CustomTextView {
-        let textView = CustomTextView(
+    func makeNSView(context: Context) -> CustomTextContainerView {
+        let textView = CustomTextContainerView(
             text: text,
             isEditable: isEditable,
             font: font,
             textColor: textColor
         )
         textView.delegate = context.coordinator
+        textView.setPlaceholder(placeholderText)
+        context.coordinator.cDelegate = textView
         textView.layer?.backgroundColor = .clear
         
         return textView
     }
     
-    func updateNSView(_ view: CustomTextView, context: Context) {
+    func updateNSView(_ view: CustomTextContainerView, context: Context) {
         view.text = text
         view.selectedRanges = context.coordinator.selectedRanges
         
@@ -64,25 +67,12 @@ struct MacEditorTextView: NSViewRepresentable {
             }
         }
         
-        //Auto completion logic
-        //TODO: cleanup make more reusable
         DispatchQueue.main.async {
-            context.coordinator.isCommandMenuActive = (isCommandMenuActive.wrappedValue || context.coordinator.isCommandMenuActive) && text.hasPrefix("/")
-            
-            // Basic startup
-            // or completing text but command was set (SandService, won't remove suggestions)
-            if isCompletingText && text.hasPrefix("/") {
-                let suggestions: [String] = text.suggestions(autoCompleteText.wrappedValue)
-                
-                let suggestion = suggestions.first ?? (text.count == 1 ? ("/" + (autoCompleteText.wrappedValue.first ?? "")) : "")
-                context.coordinator.autoCompleteTextSuggestion = suggestion
-                view.addAutoCompleteText(suggestion)
-            // not completing text, basically a reset
-            } else if context.coordinator.autoCompleteTextSuggestion.isNotEmpty || context.coordinator.isCommandMenuActive {
-                context.coordinator.autoCompleteTextSuggestion = ""
-                context.coordinator.isCommandMenuActive = false
-                view.addAutoCompleteText("")
+            guard text.starts(with: "/") else {
+                context.coordinator.cDelegate?.setPlaceholder(text.isEmpty ? placeholderText : "")
+                return
             }
+            context.coordinator.autoCompleteTextSuggestions = autoCompleteText.wrappedValue
         }
     }
 }
@@ -93,10 +83,32 @@ extension MacEditorTextView {
     
     class Coordinator: NSObject, NSTextViewDelegate {
         var parent: MacEditorTextView
-        var autoCompleteTextSuggestion: String = ""
+        
+        weak var cDelegate: CustomTextViewDelegate?
+        
+        var lastSuggestion: String = ""
+        var autoCompleteTextSuggestions: [String] = [] {
+            didSet {
+                if autoCompleteTextSuggestions.isNotEmpty {
+                    isCommandMenuActive = true
+                    autoComplete()
+                } else if isCommandMenuActive {
+                    isCommandMenuActive = false
+                    lastSuggestion = ""
+                    if parent.text.isEmpty {
+                        cDelegate?.setPlaceholder(parent.placeholderText)
+                    }
+                }
+            }
+        }
+        
         var selectedRanges: [NSValue] = []
         var lastLineCount: Int = 1
+        
         var isCommandMenuActive: Bool = false
+        var isCompletingText: Bool {
+            autoCompleteTextSuggestions.isNotEmpty
+        }
         
         init(_ parent: MacEditorTextView) {
             self.parent = parent
@@ -125,19 +137,36 @@ extension MacEditorTextView {
             
             guard self.parent.isEditable else { return }
             
-            if textView.string.prefix(1) == "/" && isCommandMenuActive == false {
-                isCommandMenuActive = true
-                self.parent.commandMenuActive(true)
-            } else if isCommandMenuActive && textView.string.prefix(1) != "/" {
-                isCommandMenuActive = false
-                self.parent.commandMenuActive(false)
-            } else if isCommandMenuActive == false {
+            let updateCommandActive: Bool = (textView.string.prefix(1) == "/" && isCommandMenuActive == false) || (isCommandMenuActive && textView.string.prefix(1) != "/")
+            
+            if updateCommandActive {
+                isCommandMenuActive.toggle()
+                self.parent.commandMenuActive(isCommandMenuActive)
+            }
+            
+            if isCommandMenuActive {
+                autoComplete()
+            } else {
                 let lineNumbers = textView.lineNumbers
                 if lineNumbers != self.lastLineCount {
                     self.lastLineCount = lineNumbers
                     self.parent.lineCountUpdated(max(self.lastLineCount, 1))
                 }
+                
+                if self.parent.text.isEmpty {
+                    cDelegate?.setPlaceholder(parent.placeholderText)
+                } else {
+                    cDelegate?.setPlaceholder("")
+                }
             }
+        }
+        
+        func autoComplete() {
+            let text = self.parent.text
+            let suggestions: [String] = text.suggestions(autoCompleteTextSuggestions)
+            let suggestion = suggestions.first ?? (text.count == 1 ? ("/" + (autoCompleteTextSuggestions.first ?? "")) : "")
+            self.lastSuggestion = suggestion
+            cDelegate?.setPlaceholder(lastSuggestion)
         }
         
         func textDidEndEditing(_ notification: Notification) {
@@ -167,7 +196,8 @@ extension MacEditorTextView {
             } else if commandSelector == #selector(NSResponder.insertTab(_:)),
                       isCommandMenuActive,
                       textView.string.hasPrefix("/") {
-                self.parent.onTabComplete(textView.string.count > 1 ? textView.string : self.autoCompleteTextSuggestion)
+                self.parent.onTabComplete(textView.string.count > 1 ? textView.string : self.lastSuggestion)
+                self.lastSuggestion = ""
                 return true
             } else {
                 return false
@@ -178,7 +208,11 @@ extension MacEditorTextView {
 
 // MARK: - CustomTextView
 
-final class CustomTextView: NSView {
+protocol CustomTextViewDelegate: class {
+    func setPlaceholder(_ text: String)
+}
+
+final class CustomTextContainerView: NSView, CustomTextViewDelegate {
     private var isEditable: Bool
     private var font: NSFont?
     private var textColor: NSColor
@@ -215,14 +249,17 @@ final class CustomTextView: NSView {
         return scrollView
     }()
     
-    lazy var textView: NSTextView = {
+    var textView: NSTextView {
+        textViews.main
+    }
+    
+    lazy var textViews: (main: NSTextView, placeholder: PassthroughNSTextView) = {
         let contentSize = scrollView.contentSize
         let textStorage = NSTextStorage()
         
         
         let layoutManager = NSLayoutManager()
         textStorage.addLayoutManager(layoutManager)
-        
         
         let textContainer = NSTextContainer(containerSize: scrollView.frame.size)
         textContainer.widthTracksTextView = true
@@ -232,7 +269,6 @@ final class CustomTextView: NSView {
         )
         
         layoutManager.addTextContainer(textContainer)
-        
         
         let textView                     = NSTextView(frame: .zero, textContainer: textContainer)
         textView.autoresizingMask        = .width
@@ -254,49 +290,38 @@ final class CustomTextView: NSView {
         
         textView.textContainerInset = .init(width: 0, height: midPointY - ((self.font?.pointSize ?? 0) / 4))
         
-        return textView
-    }()
-    
-    lazy var ptextView: PassthroughNSTextView = {
-        let contentSize = scrollView.contentSize
-        let textStorage = NSTextStorage()
-        
-        
-        let layoutManager = NSLayoutManager()
-        textStorage.addLayoutManager(layoutManager)
-        
-        
-        let textContainer = NSTextContainer(containerSize: scrollView.frame.size)
-        textContainer.widthTracksTextView = true
-        textContainer.containerSize = NSSize(
+        let ptextContainer = NSTextContainer(containerSize: scrollView.frame.size)
+        ptextContainer.widthTracksTextView = true
+        ptextContainer.containerSize = NSSize(
             width: contentSize.width,
             height: CGFloat.greatestFiniteMagnitude
         )
         
-        layoutManager.addTextContainer(textContainer)
+        let ptextStorage = NSTextStorage()
         
+        let playoutManager = NSLayoutManager()
+        ptextStorage.addLayoutManager(playoutManager)
+        playoutManager.addTextContainer(ptextContainer)
         
-        let textView                     = PassthroughNSTextView(frame: .zero, textContainer: textContainer)
-        textView.autoresizingMask        = .width
-        textView.backgroundColor         = .clear//NSColor.textBackgroundColor
-        textView.delegate                = nil
-        textView.drawsBackground         = true
-        textView.isEditable              = false
-        textView.font                    = self.font
-        textView.isHorizontallyResizable = false
-        textView.isVerticallyResizable   = true
-        textView.maxSize                 = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-        textView.minSize                 = NSSize(width: 0, height: contentSize.height)
-        textView.textColor               = self.textColor
-        textView.alphaValue = 0.5
-        textView.isSelectable = false
+        let ptextView                     = PassthroughNSTextView(frame: .zero, textContainer: ptextContainer)
+        ptextView.autoresizingMask        = .width
+        ptextView.backgroundColor         = .clear//NSColor.textBackgroundColor
+        ptextView.delegate                = nil
+        ptextView.drawsBackground         = true
+        ptextView.isEditable              = false
+        ptextView.font                    = self.font
+        ptextView.isHorizontallyResizable = false
+        ptextView.isVerticallyResizable   = true
+        ptextView.maxSize                 = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        ptextView.minSize                 = NSSize(width: 0, height: contentSize.height)
+        ptextView.textColor               = self.textColor
+        ptextView.alphaValue = 0.5
+        ptextView.isSelectable = false
         
-        let defaultWindowHeight = WindowComponent.Style.defaultWindowSize.height
-        let midPointY = defaultWindowHeight / 2
+        ptextView.textContainerInset = .init(width: 0, height: midPointY - ((self.font?.pointSize ?? 0) / 4))
         
-        textView.textContainerInset = .init(width: 0, height: midPointY - ((self.font?.pointSize ?? 0) / 4))
-        
-        return textView
+        textView.addSubview(ptextView)
+        return (textView, ptextView)
     }()
     
     // MARK: - Init
@@ -336,13 +361,14 @@ final class CustomTextView: NSView {
     }
     
     func setupTextView() {
-        textView.addSubview(ptextView)
         scrollView.documentView = textView
     }
     
-    func addAutoCompleteText(_ text: String) {
-        ptextView.string = text
-        print("[MacEditorTextView] ac \(text)")
+    func setPlaceholder(_ text: String) {
+        if self.text.count == 1 && self.text.starts(with: "/") {
+            textView.moveToEndOfDocument(nil)
+        }
+        textViews.placeholder.string = text
     }
 }
 
@@ -352,6 +378,7 @@ class PassthroughNSTextView: NSTextView {
     }
 }
 
+//MARK: Line count detection
 extension NSTextView {
     var lineNumbers: Int {
         let textView = self

@@ -57,6 +57,10 @@ extension EnvironmentService {
                 SandGPT.shared.CUSTOM_API_KEY = config.state.customAPIKey
                 SandGPT.shared.useCustomAPI()
             }
+            
+            if config.state.engineClass == .azure {
+                SandGPT.shared.unlock()
+            }
         }
     }
 }

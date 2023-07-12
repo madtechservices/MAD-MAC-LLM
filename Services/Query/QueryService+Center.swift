@@ -4,11 +4,7 @@ import SwiftUI
 extension QueryService {
     struct Center: GraniteCenter {
         struct State: GraniteState {
-            var value: String = "" {
-                didSet {
-                    SandGPTTokenizerManager.update(value)
-                }
-            }
+            var value: String = ""
         }
         
         @Event public var restore: Restore.Reducer

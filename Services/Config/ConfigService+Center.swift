@@ -31,7 +31,9 @@ extension ConfigService {
             var customAPIKey: String? = nil
             
             var isCustomAPIKeySet: Bool {
-                customAPIKey != nil && SessionManager.IS_API_ACCESS_ENABLED
+                (
+                    customAPIKey != nil && SessionManager.IS_API_ACCESS_ENABLED
+                )
             }
             
             //History

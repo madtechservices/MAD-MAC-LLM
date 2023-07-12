@@ -8,18 +8,32 @@
 import Foundation
 import Combine
 
+//TODO: is this still needed? Seems as though independant instances were focused on
 class SandGPTTokenizerKit {
     @Published var tokenCount: Int = 0
+    
+    let operationQueue: OperationQueue = .init()
+    
+    init() {
+        operationQueue.maxConcurrentOperationCount = 1
+        operationQueue.qualityOfService = .userInteractive
+    }
     
     func update(_ query: String) {
         guard query.isNotEmpty else {
             tokenCount = 0
             return
         }
-        tokenCount = SandGPT.shared.gpt3Tokenizer.encoder.enconde(text: query).count
+        
+        operationQueue.addOperation {
+            DispatchQueue.main.async {
+                self.tokenCount = SandGPT.shared.gpt3Tokenizer.encoder.enconde(text: query).count
+            }
+        }
     }
 }
 
+//TODO: is this still needed? Seems as though independant instances were focused on
 class SandGPTTokenizerManager: ObservableObject {
     static let shared: SandGPTTokenizerManager = .init()
     internal var cancellables = Set<AnyCancellable>()
@@ -47,9 +61,7 @@ class SandGPTTokenizerManager: ObservableObject {
     
     public static func update(_ query: String) {
         guard SandGPTTokenizerManager.shared.pause == false else { return }
-        DispatchQueue.global(qos: .utility).async {
-            SandGPTTokenizerManager.shared.kit.update(query)
-        }
+        SandGPTTokenizerManager.shared.kit.update(query)
     }
     
     public static var tokenCount: Int {

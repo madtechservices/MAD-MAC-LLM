@@ -9,11 +9,7 @@
 /* Begin PBXBuildFile section */
 		7105F89D2A30FB5F003DA26F /* Ink in Frameworks */ = {isa = PBXBuildFile; productRef = 7105F89C2A30FB5F003DA26F /* Ink */; };
 		7105F8A02A30FB6C003DA26F /* VaultKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7105F89F2A30FB6C003DA26F /* VaultKit */; };
-		7105F8A52A30FF00003DA26F /* Granite in Frameworks */ = {isa = PBXBuildFile; productRef = 7105F8A42A30FF00003DA26F /* Granite */; };
-		7105F8A72A30FF00003DA26F /* GraniteUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7105F8A62A30FF00003DA26F /* GraniteUI */; };
 		7105F8A92A30FF15003DA26F /* Ink in Frameworks */ = {isa = PBXBuildFile; productRef = 7105F8A82A30FF15003DA26F /* Ink */; };
-		7105F8AB2A30FF1A003DA26F /* Granite in Frameworks */ = {isa = PBXBuildFile; productRef = 7105F8AA2A30FF1A003DA26F /* Granite */; };
-		7105F8AD2A30FF20003DA26F /* GraniteUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7105F8AC2A30FF20003DA26F /* GraniteUI */; };
 		7105F8AF2A30FF42003DA26F /* VaultKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7105F8AE2A30FF42003DA26F /* VaultKit */; };
 		7105F8B82A310233003DA26F /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 7105F8B72A310233003DA26F /* LaunchAtLogin */; };
 		7105F8BA2A310257003DA26F /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 7105F8B92A310257003DA26F /* LaunchAtLogin */; };
@@ -129,6 +125,10 @@
 		7192B1962A0B5C8900C579A4 /* ConfigService+Center.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7192B1912A0B5C8900C579A4 /* ConfigService+Center.swift */; };
 		7192B1982A0B5D0200C579A4 /* View+Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7192B1972A0B5D0200C579A4 /* View+Background.swift */; };
 		7192B1992A0B5D0200C579A4 /* View+Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7192B1972A0B5D0200C579A4 /* View+Background.swift */; };
+		719551C22A5F584D00EB0B04 /* Granite in Frameworks */ = {isa = PBXBuildFile; productRef = 719551C12A5F584D00EB0B04 /* Granite */; };
+		719551C42A5F584D00EB0B04 /* GraniteUI in Frameworks */ = {isa = PBXBuildFile; productRef = 719551C32A5F584D00EB0B04 /* GraniteUI */; };
+		719551C62A5F585D00EB0B04 /* Granite in Frameworks */ = {isa = PBXBuildFile; productRef = 719551C52A5F585D00EB0B04 /* Granite */; };
+		719551C82A5F585D00EB0B04 /* GraniteUI in Frameworks */ = {isa = PBXBuildFile; productRef = 719551C72A5F585D00EB0B04 /* GraniteUI */; };
 		71991A7D2A120EB0004FB5A9 /* DataAndPrivacyConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71991A7C2A120EB0004FB5A9 /* DataAndPrivacyConfigView.swift */; };
 		71991A7E2A120EB0004FB5A9 /* DataAndPrivacyConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71991A7C2A120EB0004FB5A9 /* DataAndPrivacyConfigView.swift */; };
 		719AB1022A1C0E2400994062 /* AccountService.Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719AB1012A1C0E2300994062 /* AccountService.Purchase.swift */; };
@@ -218,8 +218,6 @@
 		71CEBDFE2A0719FC00DE6CDE /* Mount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CEBDF12A0719FC00DE6CDE /* Mount.swift */; };
 		71CEBE052A0719FC00DE6CDE /* Mount.Views.Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CEBDF62A0719FC00DE6CDE /* Mount.Views.Symbols.swift */; };
 		71CEBE062A0719FC00DE6CDE /* Mount.Views.Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CEBDF62A0719FC00DE6CDE /* Mount.Views.Symbols.swift */; };
-		71CEBE072A0719FC00DE6CDE /* Query.Ask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CEBDF82A0719FC00DE6CDE /* Query.Ask.swift */; };
-		71CEBE082A0719FC00DE6CDE /* Query.Ask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CEBDF82A0719FC00DE6CDE /* Query.Ask.swift */; };
 		71CEBE0A2A0723ED00DE6CDE /* EnvironmentService._.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CEBE092A0723ED00DE6CDE /* EnvironmentService._.swift */; };
 		71CEBE0B2A0723ED00DE6CDE /* EnvironmentService._.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CEBE092A0723ED00DE6CDE /* EnvironmentService._.swift */; };
 		71CEBE0D2A07249300DE6CDE /* InteractionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CEBE0C2A07249300DE6CDE /* InteractionManager.swift */; };
@@ -527,7 +525,6 @@
 		71CEBDF02A0719FC00DE6CDE /* Mount+Center.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Mount+Center.swift"; sourceTree = "<group>"; };
 		71CEBDF12A0719FC00DE6CDE /* Mount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mount.swift; sourceTree = "<group>"; };
 		71CEBDF62A0719FC00DE6CDE /* Mount.Views.Symbols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mount.Views.Symbols.swift; sourceTree = "<group>"; };
-		71CEBDF82A0719FC00DE6CDE /* Query.Ask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Query.Ask.swift; sourceTree = "<group>"; };
 		71CEBE092A0723ED00DE6CDE /* EnvironmentService._.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentService._.swift; sourceTree = "<group>"; };
 		71CEBE0C2A07249300DE6CDE /* InteractionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionManager.swift; sourceTree = "<group>"; };
 		71CEBE0F2A0729E500DE6CDE /* PEXApp.Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEXApp.Delegate.swift; sourceTree = "<group>"; };
@@ -625,10 +622,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7105F8BD2A310482003DA26F /* GPT3 Tokenizer in Frameworks */,
+				719551C42A5F584D00EB0B04 /* GraniteUI in Frameworks */,
 				7105F8B82A310233003DA26F /* LaunchAtLogin in Frameworks */,
-				7105F8A52A30FF00003DA26F /* Granite in Frameworks */,
-				7105F8A72A30FF00003DA26F /* GraniteUI in Frameworks */,
 				7105F8A02A30FB6C003DA26F /* VaultKit in Frameworks */,
+				719551C22A5F584D00EB0B04 /* Granite in Frameworks */,
 				7105F89D2A30FB5F003DA26F /* Ink in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -638,13 +635,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7105F8A92A30FF15003DA26F /* Ink in Frameworks */,
-				7105F8AB2A30FF1A003DA26F /* Granite in Frameworks */,
+				719551C82A5F585D00EB0B04 /* GraniteUI in Frameworks */,
 				7105F8BA2A310257003DA26F /* LaunchAtLogin in Frameworks */,
 				7105F8AF2A30FF42003DA26F /* VaultKit in Frameworks */,
-				7105F8AD2A30FF20003DA26F /* GraniteUI in Frameworks */,
 				71E8BFF12A3138A60046A8E6 /* SandKit in Frameworks */,
 				71BE324D2A05E89700B76A69 /* StoreKit.framework in Frameworks */,
 				7105F8BF2A3104EC003DA26F /* GPT3 Tokenizer in Frameworks */,
+				719551C62A5F585D00EB0B04 /* Granite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1104,7 +1101,6 @@
 		71CEBDE72A0718F900DE6CDE /* Reducers */ = {
 			isa = PBXGroup;
 			children = (
-				71CEBDF82A0719FC00DE6CDE /* Query.Ask.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -1474,10 +1470,10 @@
 			packageProductDependencies = (
 				7105F89C2A30FB5F003DA26F /* Ink */,
 				7105F89F2A30FB6C003DA26F /* VaultKit */,
-				7105F8A42A30FF00003DA26F /* Granite */,
-				7105F8A62A30FF00003DA26F /* GraniteUI */,
 				7105F8B72A310233003DA26F /* LaunchAtLogin */,
 				7105F8BC2A310482003DA26F /* GPT3 Tokenizer */,
+				719551C12A5F584D00EB0B04 /* Granite */,
+				719551C32A5F584D00EB0B04 /* GraniteUI */,
 			);
 			productName = "PEX (iOS)";
 			productReference = 711B3F792885D43B00F3080D /* Nea.app */;
@@ -1499,12 +1495,12 @@
 			name = "Nea (macOS)";
 			packageProductDependencies = (
 				7105F8A82A30FF15003DA26F /* Ink */,
-				7105F8AA2A30FF1A003DA26F /* Granite */,
-				7105F8AC2A30FF20003DA26F /* GraniteUI */,
 				7105F8AE2A30FF42003DA26F /* VaultKit */,
 				7105F8B92A310257003DA26F /* LaunchAtLogin */,
 				7105F8BE2A3104EC003DA26F /* GPT3 Tokenizer */,
 				71E8BFF02A3138A60046A8E6 /* SandKit */,
+				719551C52A5F585D00EB0B04 /* Granite */,
+				719551C72A5F585D00EB0B04 /* GraniteUI */,
 			);
 			productName = "PEX (macOS)";
 			productReference = 711B3F7F2885D43B00F3080D /* Nea.app */;
@@ -1584,9 +1580,9 @@
 			packageReferences = (
 				7105F89B2A30FB5F003DA26F /* XCRemoteSwiftPackageReference "Ink" */,
 				7105F89E2A30FB6C003DA26F /* XCRemoteSwiftPackageReference "VaultKit" */,
-				7105F8A32A30FF00003DA26F /* XCRemoteSwiftPackageReference "Granite" */,
 				7105F8B62A310233003DA26F /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
 				7105F8BB2A310482003DA26F /* XCRemoteSwiftPackageReference "GPT3-Tokenizer" */,
+				719551C02A5F584D00EB0B04 /* XCRemoteSwiftPackageReference "Granite" */,
 			);
 			productRefGroup = 711B3F7A2885D43B00F3080D /* Products */;
 			projectDirPath = "";
@@ -1793,7 +1789,6 @@
 				712BEB6C2907649600D257B7 /* AnimationCompletion.swift in Sources */,
 				717E613328A0D69B009A2B1A /* Home._.swift in Sources */,
 				71BE32652A06109D00B76A69 /* StringExtension.swift in Sources */,
-				71CEBE072A0719FC00DE6CDE /* Query.Ask.swift in Sources */,
 				7163516B2A16E20100C06533 /* BasicDictionaryEncoderDecoder.swift in Sources */,
 				71F057B62A27205C00DBB956 /* InnerShadowExtensions.swift in Sources */,
 				7192B1952A0B5C8900C579A4 /* ConfigService+Center.swift in Sources */,
@@ -1984,7 +1979,6 @@
 				71F057812A27205C00DBB956 /* RenderIf.swift in Sources */,
 				712BEB6D2907649600D257B7 /* AnimationCompletion.swift in Sources */,
 				71BE32662A06109D00B76A69 /* StringExtension.swift in Sources */,
-				71CEBE082A0719FC00DE6CDE /* Query.Ask.swift in Sources */,
 				7163516C2A16E20100C06533 /* BasicDictionaryEncoderDecoder.swift in Sources */,
 				717E613428A0D69B009A2B1A /* Home._.swift in Sources */,
 				71F057B72A27205C00DBB956 /* InnerShadowExtensions.swift in Sources */,
@@ -2463,14 +2457,6 @@
 				kind = branch;
 			};
 		};
-		7105F8A32A30FF00003DA26F /* XCRemoteSwiftPackageReference "Granite" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pexavc/Granite.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		7105F8B62A310233003DA26F /* XCRemoteSwiftPackageReference "LaunchAtLogin" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin";
@@ -2487,6 +2473,14 @@
 				minimumVersion = 0.1.2;
 			};
 		};
+		719551C02A5F584D00EB0B04 /* XCRemoteSwiftPackageReference "Granite" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pexavc/Granite.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2500,30 +2494,10 @@
 			package = 7105F89E2A30FB6C003DA26F /* XCRemoteSwiftPackageReference "VaultKit" */;
 			productName = VaultKit;
 		};
-		7105F8A42A30FF00003DA26F /* Granite */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7105F8A32A30FF00003DA26F /* XCRemoteSwiftPackageReference "Granite" */;
-			productName = Granite;
-		};
-		7105F8A62A30FF00003DA26F /* GraniteUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7105F8A32A30FF00003DA26F /* XCRemoteSwiftPackageReference "Granite" */;
-			productName = GraniteUI;
-		};
 		7105F8A82A30FF15003DA26F /* Ink */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7105F89B2A30FB5F003DA26F /* XCRemoteSwiftPackageReference "Ink" */;
 			productName = Ink;
-		};
-		7105F8AA2A30FF1A003DA26F /* Granite */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7105F8A32A30FF00003DA26F /* XCRemoteSwiftPackageReference "Granite" */;
-			productName = Granite;
-		};
-		7105F8AC2A30FF20003DA26F /* GraniteUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7105F8A32A30FF00003DA26F /* XCRemoteSwiftPackageReference "Granite" */;
-			productName = GraniteUI;
 		};
 		7105F8AE2A30FF42003DA26F /* VaultKit */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2549,6 +2523,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7105F8BB2A310482003DA26F /* XCRemoteSwiftPackageReference "GPT3-Tokenizer" */;
 			productName = "GPT3 Tokenizer";
+		};
+		719551C12A5F584D00EB0B04 /* Granite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 719551C02A5F584D00EB0B04 /* XCRemoteSwiftPackageReference "Granite" */;
+			productName = Granite;
+		};
+		719551C32A5F584D00EB0B04 /* GraniteUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 719551C02A5F584D00EB0B04 /* XCRemoteSwiftPackageReference "Granite" */;
+			productName = GraniteUI;
+		};
+		719551C52A5F585D00EB0B04 /* Granite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 719551C02A5F584D00EB0B04 /* XCRemoteSwiftPackageReference "Granite" */;
+			productName = Granite;
+		};
+		719551C72A5F585D00EB0B04 /* GraniteUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 719551C02A5F584D00EB0B04 /* XCRemoteSwiftPackageReference "Granite" */;
+			productName = GraniteUI;
 		};
 		71E8BFF02A3138A60046A8E6 /* SandKit */ = {
 			isa = XCSwiftPackageProductDependency;
